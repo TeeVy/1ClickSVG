@@ -1,0 +1,16 @@
+{
+  "name": "1clicksvg",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Firefox / Zen extension: Option/Alt + click to save any SVG or image.",
+  "license": "MIT",
+  "scripts": {
+    "start": "web-ext run",
+    "lint": "web-ext lint",
+    "build": "web-ext build --overwrite-dest",
+    "sign": "web-ext sign --channel=unlisted"
+  },
+  "devDependencies": {
+    "web-ext": "^8.3.0"
+  }
+}
