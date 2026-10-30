@@ -2,20 +2,29 @@
   "manifest_version": 2,
   "name": "1ClickSVG",
   "version": "1.1.0",
-  "description": "Hold Option/Alt and hover any SVG or image (PNG, JPG, WebP, GIF…) to outline it, click to save it. / Maintenez Option et cliquez pour enregistrer un SVG ou une image.",
+  "description": "Hold Option/Alt and click to save any SVG or image (PNG, JPG, WebP…) from a web page.",
   "homepage_url": "https://github.com/TeeVy/1ClickSVG",
   "icons": {
     "48": "icons/icon.svg",
     "96": "icons/icon.svg"
   },
-  "permissions": ["downloads", "<all_urls>"],
+  "permissions": [
+    "downloads",
+    "<all_urls>"
+  ],
   "background": {
-    "scripts": ["background.js"]
+    "scripts": [
+      "background.js"
+    ]
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
       "run_at": "document_idle",
       "all_frames": true
     }
@@ -23,7 +32,12 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "1clicksvg@robin.local",
-      "strict_min_version": "109.0"
+      "strict_min_version": "109.0",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
     }
   }
 }
