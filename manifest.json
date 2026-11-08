@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "1ClickSVG",
-  "version": "1.1.0",
-  "description": "Hold Option/Alt and click to save any SVG or image (PNG, JPG, WebP…) from a web page.",
+  "version": "1.2.0",
+  "description": "Option/Alt + click saves any SVG or image (PNG, JPG, WebP…) from a web page. Add Shift to copy it instead.",
   "homepage_url": "https://github.com/TeeVy/1ClickSVG",
   "icons": {
     "48": "icons/icon.svg",
@@ -10,6 +10,7 @@
   },
   "permissions": [
     "downloads",
+    "clipboardWrite",
     "<all_urls>"
   ],
   "background": {

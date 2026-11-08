@@ -1,4 +1,5 @@
-// 1ClickSVG — Option (Alt) + survol = sélection du SVG ou de l'image, Option + clic = enregistrer sous…
+// 1ClickSVG — Option (Alt) + survol = sélection du SVG ou de l'image,
+// Option + clic = enregistrer sous…, Option + Maj + clic = copier.
 (() => {
   if (window.__oneClickSvgLoaded) return;
   window.__oneClickSvgLoaded = true;
@@ -6,13 +7,16 @@
   const SVG_NS = "http://www.w3.org/2000/svg";
 
   const T = /^fr\b/i.test(navigator.language)
-    ? { click: "clic pour enregistrer", preparing: "Préparation…", saved: "Enregistré ✓",
-        canceled: "Annulé", error: "Erreur : ", canvasLocked: "canvas protégé par le site" }
-    : { click: "click to save", preparing: "Preparing…", saved: "Saved ✓",
-        canceled: "Canceled", error: "Error: ", canvasLocked: "canvas is protected by the site" };
+    ? { click: "clic pour enregistrer", clickCopy: "clic pour copier", preparing: "Préparation…",
+        saved: "Enregistré ✓", copied: "Copié ✓", canceled: "Annulé", error: "Erreur : ",
+        canvasLocked: "canvas protégé par le site" }
+    : { click: "click to save", clickCopy: "click to copy", preparing: "Preparing…",
+        saved: "Saved ✓", copied: "Copied ✓", canceled: "Canceled", error: "Error: ",
+        canvasLocked: "canvas is protected by the site" };
   const XLINK_NS = "http://www.w3.org/1999/xlink";
 
   let altDown = false;
+  let shiftDown = false; // Option + Maj : copier au lieu d'enregistrer
   let lastX = -1;
   let lastY = -1;
   let current = null; // { kind: "inline" | "url", el, url? }
@@ -64,7 +68,7 @@
     box.classList.toggle("ok", state === "ok");
     box.classList.toggle("err", state === "err");
     tag.textContent =
-      label || `${target.label} · ${Math.round(r.width)}×${Math.round(r.height)} — ${T.click}`;
+      label || `${target.label} · ${Math.round(r.width)}×${Math.round(r.height)} — ${shiftDown ? T.clickCopy : T.click}`;
     box.style.display = "block";
   }
 
@@ -406,9 +410,9 @@
     }
   }
 
-  async function save(target) {
+  async function save(target, copy) {
     showOverlay(target, T.preparing);
-    const msg = { type: "save-image", filename: suggestName(target), hint: target.label };
+    const msg = { type: copy ? "copy-image" : "save-image", filename: suggestName(target), hint: target.label };
     try {
       if (target.kind === "inline") {
         msg.svg = await serializeInline(target.el);
@@ -431,7 +435,7 @@
       const res = await browser.runtime.sendMessage(msg);
       const canceled = res && !res.ok && /cancel/i.test(res.error || "");
       if (res && !res.ok && !canceled) throw new Error(res.error);
-      flash(target, canceled ? T.canceled : T.saved, canceled ? null : "ok");
+      flash(target, canceled ? T.canceled : copy ? T.copied : T.saved, canceled ? null : "ok");
     } catch (e) {
       console.error("[1ClickSVG]", e);
       flash(target, T.error + (e && e.message || e), "err");
@@ -455,6 +459,9 @@
     if (e.key === "Alt") {
       altDown = true;
       update();
+    } else if (e.key === "Shift") {
+      shiftDown = true;
+      if (altDown) update();
     }
   }, true);
 
@@ -462,6 +469,9 @@
     if (e.key === "Alt") {
       altDown = false;
       hideOverlay();
+    } else if (e.key === "Shift") {
+      shiftDown = false;
+      if (altDown) update();
     }
   }, true);
 
@@ -469,11 +479,13 @@
     lastX = e.clientX;
     lastY = e.clientY;
     altDown = e.altKey;
+    shiftDown = e.shiftKey;
     update();
   }, true);
 
   const reset = () => {
     altDown = false;
+    shiftDown = false;
     hideOverlay();
   };
   window.addEventListener("blur", reset);
@@ -485,7 +497,7 @@
   window.addEventListener("scroll", reposition, true);
   window.addEventListener("resize", reposition);
 
-  // On bloque l'action normale (lien, bouton…) quand Option+clic vise un SVG.
+  // On bloque l'action normale (lien, bouton…) quand Option+clic vise un SVG ou une image.
   const swallow = (e) => {
     if (!e.altKey || e.button !== 0) return false;
     const t = current || findTarget(e.clientX, e.clientY);
@@ -499,6 +511,6 @@
   }
   window.addEventListener("click", (e) => {
     const t = swallow(e);
-    if (t) save(t);
+    if (t) save(t, e.shiftKey);
   }, opts);
 })();

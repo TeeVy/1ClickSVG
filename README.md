@@ -5,8 +5,12 @@
 <h1 align="center">1ClickSVG</h1>
 
 <p align="center">
-  <b>Option/Alt + click to save any SVG or image.</b><br>
+  <b>Option/Alt + click to save any SVG or image. Add Shift to copy it.</b><br>
   Firefox · Zen Browser · any Firefox-based browser
+</p>
+
+<p align="center">
+  <a href="https://addons.mozilla.org/firefox/addon/1clicksvg/"><img src="https://img.shields.io/amo/v/1clicksvg?label=Firefox%20Add-ons&logo=firefoxbrowser&color=7c5cff" alt="Get 1ClickSVG on Firefox Add-ons"></a>
 </p>
 
 <p align="center">
@@ -17,9 +21,16 @@
 
 ## English
 
-Hold **⌥ Option** (**Alt** on Windows/Linux) and hover a logo, icon or picture: it gets outlined so you see exactly what will be saved. **Click** and the "Save as" dialog opens with the file ready.
+Hold **⌥ Option** (**Alt** on Windows/Linux) and hover a logo, icon or picture: it gets outlined so you see exactly what you'll get.
 
-### What it can save
+| Shortcut | Action |
+| --- | --- |
+| **⌥ Option + click** | Save: the "Save as" dialog opens with the file ready |
+| **⌥ Option + ⇧ Shift + click** | Copy: SVGs are copied as code, other images as a picture |
+
+Copied SVG code can be pasted straight into Figma, Illustrator, a code editor or an HTML page. Copied images are PNG (or JPG), so WebP, GIF, AVIF… are converted to PNG when copied.
+
+### What it can save or copy
 
 | Element on the page | Saved as |
 | --- | --- |
@@ -42,8 +53,7 @@ Links and buttons are not triggered when you Option‑click an image inside them
 
 ### Install
 
-**From a release (recommended)**
-Download the signed `.xpi` from the [Releases](../../releases) page and drag it into a Zen or Firefox window.
+**[Get it on Firefox Add-ons](https://addons.mozilla.org/firefox/addon/1clicksvg/)**, it works in Zen and every Firefox-based browser.
 
 **Temporary install, for development**
 1. Open `about:debugging#/runtime/this-firefox`
@@ -82,9 +92,16 @@ Bump `version` in `manifest.json` before each new signature.
 
 ## Français
 
-Maintenez **⌥ Option** (**Alt** sous Windows/Linux) et survolez un logo, une icône ou une image : il est entouré, pour voir exactement ce qui sera enregistré. **Cliquez** : la fenêtre « Enregistrer sous » s'ouvre avec le fichier prêt.
+Maintenez **⌥ Option** (**Alt** sous Windows/Linux) et survolez un logo, une icône ou une image : il est entouré, pour voir exactement ce que vous allez récupérer.
 
-### Ce qui peut être enregistré
+| Raccourci | Action |
+| --- | --- |
+| **⌥ Option + clic** | Enregistrer : la fenêtre « Enregistrer sous » s'ouvre avec le fichier prêt |
+| **⌥ Option + ⇧ Maj + clic** | Copier : les SVG sont copiés en code, les autres images en image |
+
+Le code SVG copié se colle directement dans Figma, Illustrator, un éditeur de code ou une page HTML. Les images sont copiées en PNG (ou JPG) : les WebP, GIF, AVIF… sont convertis en PNG à la copie.
+
+### Ce qui peut être enregistré ou copié
 
 | Élément de la page | Enregistré en |
 | --- | --- |
@@ -107,8 +124,7 @@ Option + clic sur une image placée dans un lien ou un bouton n'ouvre pas le lie
 
 ### Installation
 
-**Depuis une release (recommandé)**
-Téléchargez le `.xpi` signé sur la page [Releases](../../releases) et glissez-le dans une fenêtre Zen ou Firefox.
+**[Installer depuis Firefox Add-ons](https://addons.mozilla.org/fr/firefox/addon/1clicksvg/)** : fonctionne dans Zen et tous les navigateurs basés sur Firefox.
 
 **Installation temporaire, pour le développement**
 1. Ouvrez `about:debugging#/runtime/this-firefox`
